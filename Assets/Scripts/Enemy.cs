@@ -66,12 +66,15 @@ public class Enemy : MonoBehaviour {
 	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
 		// find out what we've hit
-		if (hit.collider.gameObject.CompareTag ("Pipe")) {
+		if (hit.collider.gameObject.CompareTag ("Pipe"))
+        {
 			// we've hit the pipe
 
 			// flip the direction of the enemy
 			direction = -direction;
-		} else if (hit.collider.gameObject.CompareTag ("Player")) {
+		}
+        else if (hit.collider.gameObject.CompareTag ("Player"))
+        {
 			// we've hit the player
 
 			// get player script component
@@ -85,6 +88,6 @@ public class Enemy : MonoBehaviour {
 
 			// reset the enemy
 			Reset();
-		}
-	}
+        }
+    }
 }
