@@ -39,6 +39,11 @@ public class Enemy : MonoBehaviour {
 		direction = start_direction;
 	}
 
+    void OnEnable()
+    {
+        Reset();
+    }
+
 	void Update()
 	{
 		// get the character controller attached to the enemy game object
@@ -66,7 +71,8 @@ public class Enemy : MonoBehaviour {
 	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
 		// find out what we've hit
-		if (hit.collider.gameObject.CompareTag ("Pipe"))
+		if (hit.collider.gameObject.CompareTag ("Pipe") ||
+            hit.collider.gameObject.CompareTag("Goomba"))
         {
 			// we've hit the pipe
 

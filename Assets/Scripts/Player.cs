@@ -105,7 +105,13 @@ public class Player : MonoBehaviour {
         }
         else if (hit.collider.gameObject.CompareTag("Goomba"))
         {
-            Attacked(hit.collider.gameObject);
+            if (hit.point.y < gameObject.transform.position.y)
+            {
+                hit.collider.gameObject.SetActive(false);
+                JumpPlayer();
+            }
+            else
+                Attacked(hit.collider.gameObject);
         }
         else if (hit.collider.gameObject.CompareTag("Piranha"))
         {
