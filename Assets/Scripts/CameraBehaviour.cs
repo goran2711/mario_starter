@@ -9,10 +9,10 @@ using UnityEngine;
 public class CameraBehaviour : MonoBehaviour {
 
     [SerializeField] CharacterController target;
-    [SerializeField] Vector2 focusAreaSize;
-    [SerializeField] float lookAheadDistX;
-    [SerializeField] float smoothTimeX;
-    [SerializeField] float verticalOffset;
+    [SerializeField] Vector2 focusAreaSize  = new Vector2(2.5f, 8.0f);
+    [SerializeField] float lookAheadDistX   = 3.0f;
+    [SerializeField] float smoothTimeX      = 0.2f;
+    [SerializeField] float verticalOffset   = 1.5f;
 
     FocusArea focusArea;
 
@@ -23,6 +23,8 @@ public class CameraBehaviour : MonoBehaviour {
 
     void Start()
     {
+        if (!target)
+            target = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
         focusArea = new FocusArea(target.bounds, focusAreaSize);
     }
 
@@ -43,7 +45,7 @@ public class CameraBehaviour : MonoBehaviour {
         cameraFocusPosition += Vector3.up * verticalOffset;
         cameraFocusPosition += Vector3.right * currentLookAheadX;
 
-        transform.position = cameraFocusPosition;
+        this.transform.position = cameraFocusPosition;
     }
 
     struct FocusArea
