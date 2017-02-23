@@ -17,15 +17,23 @@ public class PlantScript : MonoBehaviour
     private Vector3 endPoint;
     private float secondsForOneLength = 3f;
 
+    [Header("Debug")]
+    public Vector3 _plantMoveVector;
+    public Vector3 _startPointVector;
+    public Vector3 _endPointVector;
+
+
     void Start()
     {
         // find the player game object in the scene
         playerGameObject = GameObject.FindGameObjectWithTag("Player");
 
 
-        startPoint = transform.position;
-        endPoint = farEnd.position;
-    }
+        _startPointVector = startPoint = transform.position;
+        _endPointVector = endPoint = farEnd.position;
+
+
+}
 
     public void Reset()
     {
@@ -41,33 +49,12 @@ public class PlantScript : MonoBehaviour
         // get the character controller attached to the enemy game object
         CharacterController controller = GetComponent<CharacterController>();
 
-
-        transform.position = Vector3.Lerp(startPoint, endPoint,
+        Vector3 moveVector;
+        moveVector = _plantMoveVector = Vector3.Lerp(startPoint - transform.position, endPoint - transform.position,
          Mathf.SmoothStep(0f, 1f,
           Mathf.PingPong(Time.time / secondsForOneLength, 1f)
         ));
-    }
 
-    //
-    // This function is called when a CharacterController moves into an object
-    //
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.collider.gameObject.CompareTag("Player"))
-        {
-            // we've hit the player
-
-            // get player script component
-            Player playerComponent = playerGameObject.GetComponent<Player>();
-
-            // remove a life from the player
-            playerComponent.Lives = playerComponent.Lives - 1;
-
-            // reset the player
-            playerComponent.Reset();
-
-            // reset the enemy
-            Reset();
-        }
+        controller.Move(moveVector * Time.deltaTime);
     }
 }

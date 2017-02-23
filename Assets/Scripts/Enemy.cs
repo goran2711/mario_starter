@@ -39,6 +39,11 @@ public class Enemy : MonoBehaviour {
 		direction = start_direction;
 	}
 
+    void OnEnable()
+    {
+        Reset();
+    }
+
 	void Update()
 	{
 		// get the character controller attached to the enemy game object
@@ -66,28 +71,13 @@ public class Enemy : MonoBehaviour {
 	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
 		// find out what we've hit
-		if (hit.collider.gameObject.CompareTag ("Pipe"))
+		if (hit.collider.gameObject.CompareTag ("Pipe") ||
+            hit.collider.gameObject.CompareTag("Goomba"))
         {
 			// we've hit the pipe
 
 			// flip the direction of the enemy
 			direction = -direction;
 		}
-        else if (hit.collider.gameObject.CompareTag ("Player"))
-        {
-			// we've hit the player
-
-			// get player script component
-			Player playerComponent = playerGameObject.GetComponent<Player> ();
-
-			// remove a life from the player
-			playerComponent.Lives = playerComponent.Lives - 1;
-
-			// reset the player
-			playerComponent.Reset();
-
-			// reset the enemy
-			Reset();
-        }
     }
 }
