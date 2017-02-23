@@ -73,21 +73,5 @@ public class Enemy : MonoBehaviour {
 			// flip the direction of the enemy
 			direction = -direction;
 		}
-        else if (hit.collider.gameObject.CompareTag ("Player"))
-        {
-			// we've hit the player
-
-			// get player script component
-			Player playerComponent = playerGameObject.GetComponent<Player> ();
-
-			// remove a life from the player
-			playerComponent.Lives = playerComponent.Lives - 1;
-
-			// reset the player
-			playerComponent.Reset();
-
-			// reset the enemy
-			Reset();
-        }
     }
 }
