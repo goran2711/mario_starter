@@ -14,9 +14,9 @@ public class Enemy : MonoBehaviour {
 
 	public Vector3 direction = new Vector3(1.0f, 0.0f, 0.0f); // normalised direction the enemy will move in
 
-	Vector3 start_position; // start position of the enemy
+	public Vector3 start_position; // start position of the enemy
 
-	Vector3 start_direction; // start direction of the enemy
+	public Vector3 start_direction; // start direction of the enemy
 
 	void Start()
 	{
@@ -28,7 +28,9 @@ public class Enemy : MonoBehaviour {
 
 		// record the start direction
 		start_direction = direction;
-	}
+
+        Reset();
+    }
 
 	public void Reset()
 	{
@@ -41,7 +43,8 @@ public class Enemy : MonoBehaviour {
 
     void OnEnable()
     {
-        Reset();
+        if (playerGameObject != null)
+            Reset();
     }
 
 	void Update()
@@ -56,10 +59,8 @@ public class Enemy : MonoBehaviour {
 			moveDirection = direction;
 			moveDirection *= speed;
 		}
-
-
-		// apply gravity to movement direction
-		moveDirection.y -= gravity * Time.deltaTime;
+        else
+		    moveDirection.y -= gravity * Time.deltaTime;
 
 		// make the call to move the character controller
 		controller.Move(moveDirection * Time.deltaTime);
